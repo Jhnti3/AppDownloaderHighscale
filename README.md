@@ -1,5 +1,5 @@
 [README.md](https://github.com/user-attachments/files/21583249/README.md)
-# 🎬 DOWNL_EXP — Downloader de Vídeos e Áudios do YouTube
+# 🎬 AppDownloaderHighscale — Downloader de Vídeos e Áudios do YouTube
 
 Aplicação web simples para baixar vídeos e áudios diretamente do YouTube em formato MP3 ou MP4.
 (Esses apps vão ser implementadas dentro de um projeto maior, assim como o image to text)
