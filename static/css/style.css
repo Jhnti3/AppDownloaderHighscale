@@ -1,0 +1,263 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f7fa;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Cabeçalho fixo / /* header config */ 
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #3f8efc;
+  color: white;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 1000;
+}
+
+.container-header {
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  height: 36px;
+  width: auto;
+}
+
+/* Ajuste container principal para não ficar escondido atrás do header */
+.container {
+  margin-top: 80px; /* espaço para o header fixo */
+}
+
+/* header config */
+
+.container {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 12px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.subtitle {
+  font-weight: 400;
+  font-size: 1rem;
+  margin-bottom: 32px;
+  color: #666;
+}
+
+.input-group {
+  margin-bottom: 24px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+  border-color: #3f8efc;
+  outline: none;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.btn {
+  flex: 1;
+  padding: 14px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #e0e0e0;
+  color: #333;
+  transition: background-color 0.25s ease;
+}
+
+.btn:hover {
+  background: #d5d5d5;
+}
+
+.btn-primary {
+  background: #3f8efc;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #3277e6;
+}
+
+#status {
+  font-size: 0.95rem;
+  min-height: 24px;
+  font-weight: 600;
+  color: #444;
+}
+
+#status.loading {
+  color: #3f8efc;
+}
+
+#status.error {
+  color: #e53e3e;
+}
+
+#status.success {
+  color: #38a169;
+}
+
+/* Responsivo simples */
+@media (max-width: 400px) {
+  .btn-group {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+/* DISCLAIMER ANTI QUEDA */
+
+.disclaimer {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-btn {
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 500px;
+    max-height: 70%;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    font-size: 14px;
+}
+
+.modal-content .close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+  cursor: default;
+}
+
+.tooltip-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 320px;
+  background-color: #222;
+  color: #fff;
+  text-align: left;
+  border-radius: 8px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1000;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+/* DISCLAIMER ANTI QUEDA */

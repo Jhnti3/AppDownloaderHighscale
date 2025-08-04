@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>DOWNL_EXP - Downloader YouTube</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+    <!-- <header class="header">
+  <div class="container-header">
+ <img src="{{ url_for('static', filename='img/logo.png') }}" alt="DOWNL_EXP Logo" class="logo" /> -->
+    <!-- <h1>Download de Vídeos</h1>
+  </div>
+    </header> --> 
+
+  <main class="container">
+    <h1>Tool Download</h1>
+    <p class="subtitle">Baixe vídeos e áudios do YouTube facilmente</p>
+
+    <div class="input-group">
+      <input
+        type="text"
+        id="urlInput"
+        placeholder="Cole o link do vídeo aqui"
+        autocomplete="off"/>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn" onclick="startDownload('mp3')">Download MP3</button>
+      <button class="btn btn-primary" onclick="startDownload('mp4')">Download MP4</button>
+    </div>
+
+    <div class="disclaimer">
+            <span>⚠️ Conteúdo protegido por direitos autorais não está disponível para download com esta ferramenta.</span>
+        <div class="tooltip">
+            <svg class="tooltip-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="12" fill="#555"/>
+                <text x="12" y="16" text-anchor="middle" font-size="14" font-family="Arial" fill="white">?</text>
+            </svg>
+            <span class="tooltiptext">
+      Ao selecionar Download, você afirma que o conteúdo de áudio ou vídeo que está acessando destina-se exclusivamente para uso pessoal e não comercial. Você concorda em não distribuir, reproduzir, modificar ou usar o conteúdo baixado para fins comerciais, incluindo, mas não se limitando a, revenda, apresentação pública ou transmissão. Qualquer uso do conteúdo que exceda o escopo destes termos pode resultar em violação das leis de direitos autorais aplicáveis e dos termos de serviço. O site se isenta de toda responsabilidade por qualquer uso não autorizado ou impróprio do conteúdo, e o usuário assume total responsabilidade pelo cumprimento de todas as obrigações legais e contratuais relevantes.
+            </span>
+        </div>
+    </div>
+
+
+    <div id="termsModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+      <div class="modal-content">
+        <button class="close" aria-label="Fechar aviso" onclick="toggleTerms()">&times;</button>
+        <h2 id="modalTitle">Aviso Legal</h2>
+        <p id="modalDesc">
+          Ao selecionar Download, você afirma que o conteúdo de áudio ou vídeo que está acessando destina-se exclusivamente para uso pessoal e não comercial.
+          Você concorda em não distribuir, reproduzir, modificar ou usar o conteúdo baixado para fins comerciais, incluindo, mas não se limitando a, revenda,
+          apresentação pública ou transmissão. Qualquer uso do conteúdo que exceda o escopo destes termos pode resultar em violação das leis de direitos autorais
+          aplicáveis e dos termos de serviço. O site se isenta de toda responsabilidade por qualquer uso não autorizado ou impróprio do conteúdo, e o usuário
+          assume total responsabilidade pelo cumprimento de todas as obrigações legais e contratuais relevantes.
+        </p>
+      </div>
+    </div>
+
+    <div id="status" role="alert" aria-live="polite"></div>
+  </main>
+
+  <script>
+    async function startDownload(format) {
+      const url = document.getElementById('urlInput').value.trim();
+      const status = document.getElementById('status');
+      status.textContent = '';
+      status.className = '';
+
+      if (!url) {
+        status.textContent = 'Cole um link válido!';
+        status.classList.add('error');
+        return;
+      }
+
+      status.textContent = 'Processando download...';
+      status.classList.add('loading');
+
+      try {
+        const response = await fetch('/download', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url, format }),
+        });
+
+        if (!response.ok) {
+          let errorMsg = response.statusText;
+          try {
+            const errorData = await response.json();
+            errorMsg = errorData.error || errorMsg;
+          } catch {}
+          status.textContent = 'Erro: ' + errorMsg;
+          status.className = 'error';
+          return;
+        }
+
+        const blob = await response.blob();
+        const disposition = response.headers.get('Content-Disposition');
+        let filename = 'download.' + format;
+
+        if (disposition && disposition.indexOf('filename=') !== -1) {
+          filename = disposition.split('filename=')[1].replace(/"/g, '');
+        }
+
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        status.textContent = 'Download concluído!';
+        status.className = 'success';
+      } catch (err) {
+        status.textContent = 'Erro ao baixar: ' + err.message;
+        status.className = 'error';
+      }
+    }
+
+    function toggleTerms() {
+      const modal = document.getElementById('termsModal');
+      modal.classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>
